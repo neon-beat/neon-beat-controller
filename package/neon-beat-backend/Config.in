@@ -1,0 +1,10 @@
+config BR2_PACKAGE_NEON_BEAT_BACKEND
+	bool "neon-beat-backend"
+	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
+	select BR2_PACKAGE_HOST_RUSTC
+	help
+	  The Neon Beat backend is the main software controller for Neon Beat.
+	  It is in charge of monitoring the buzzers, handling the game state,
+	  expose controls to the game admin, etc
+	
+	  https://github.com/neon-beat/neon-beat-back
