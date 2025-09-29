@@ -1,0 +1,6 @@
+[Match]
+Type=wlan
+
+[Link]
+Description=Hotpluggable wireless interface
+Name=nb0
