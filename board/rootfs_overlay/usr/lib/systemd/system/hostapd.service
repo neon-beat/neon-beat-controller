@@ -1,0 +1,12 @@
+[Unit]
+Description=Neon Beat buzzers access point
+BindsTo=sys-subsystem-net-devices-nb0.device
+After=sys-subsystem-net-devices-nb0.device
+
+[Service]
+Type=forking
+PIDFile=/run/hostapd.pid
+ExecStart=/sbin/hostapd /etc/hostapd/hostapd.conf -P /run/hostapd.pid -B
+
+[Install]
+WantedBy=multi-user.target
