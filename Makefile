@@ -6,11 +6,6 @@
 
 THIS_EXTERNAL_PATH := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
-# Put downloads in this directory instead of in the Buildroot directory
-ifeq ($(BR2_DL_DIR),)
-BR2_DL_DIR = $(THIS_EXTERNAL_PATH)/dl
-endif
-
 OUTPUT_DIR = $(THIS_EXTERNAL_PATH)/output
 DOT_CONFIG= $(OUTPUT_DIR)/.config
 
