@@ -9,6 +9,7 @@ This file contains topics to undertake to improve NBC
   through pins 8 and 10
 - The game currently only supports being displayed from the network:
   plugging an HDMI cable won't display anything aside a console
+- The backend is missing a systemd service to automatically start
 
 ## Secondary topics
 
