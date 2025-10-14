@@ -9,7 +9,7 @@ Type=oneshot
 ExecStartPre=/bin/mv /var/lib/couchdb.docker /tmp/couchdb.docker
 ExecStart=/bin/docker load -i /tmp/couchdb.docker
 ExecStartPost=/bin/rm /tmp/couchdb.docker
-ExecStartPost=/bin/docker run --name couchdb -p 5984:5984 -e COUCHDB_USER=admin COUCHDB_PASSWORD=admin --restart unless-stopped -d arm64v8/couchdb:3.4
+ExecStartPost=/bin/docker run --name couchdb -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin --restart unless-stopped -d arm64v8/couchdb:3.4
 
 [Install]
 WantedBy=multi-user.target
