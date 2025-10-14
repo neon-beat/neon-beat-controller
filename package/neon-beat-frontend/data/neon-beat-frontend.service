@@ -10,4 +10,4 @@ RestartSec=5s
 ExecStart=/sbin/lighttpd /srv/www
 
 [Install]
-Wanted-by=multi-user.target
+WantedBy=multi-user.target
