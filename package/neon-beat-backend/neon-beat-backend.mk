@@ -9,4 +9,9 @@ NEON_BEAT_BACKEND_SITE = $(call github,neon-beat,neon-beat-back,$(NEON_BEAT_BACK
 NEON_BEAT_BACKEND_LICENSE = GPL-3.0
 NEON_BEAT_BACKEND_LICENSE_FILES = COPYING
 
+define NEON_BEAT_BACKEND_INSTALL_INIT_SYSTEMD
+	$(INSTALL) -D -m 644 $(NEON_BEAT_BACKEND_PKGDIR)/data/neon-beat-backend.service \
+		$(TARGET_DIR)/usr/lib/systemd/system/neon-beat-backend.service
+endef
+
 $(eval $(cargo-package))

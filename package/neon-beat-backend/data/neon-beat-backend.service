@@ -1,0 +1,13 @@
+[Unit]
+Description=Neon Beat Backend daemon
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+ExecStart=/bin/neon-beat-back
+
+[Install]
+WantedBy=multi-user.target
