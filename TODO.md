@@ -10,6 +10,8 @@ This file contains topics to undertake to improve NBC
 - The game currently only supports being displayed from the network:
   plugging an HDMI cable won't display anything aside a console
 - The backend is missing a systemd service to automatically start
+- NBC is missing some avahi configuration so we can use directly
+  "nbc.local" in a web browser.
 
 ## Secondary topics
 
