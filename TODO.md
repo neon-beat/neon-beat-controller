@@ -12,6 +12,9 @@ This file contains topics to undertake to improve NBC
 - The backend is missing a systemd service to automatically start
 - NBC is missing some avahi configuration so we can use directly
   "nbc.local" in a web browser.
+- Separate the database raw data from the couchdb container: ideally
+  couchdb database lives in a dedicated volume based on a dedicated
+  partition on the sd card.
 
 ## Secondary topics
 
@@ -27,3 +30,6 @@ This file contains topics to undertake to improve NBC
   it](https://layers.openembedded.org/layerindex/recipe/454923/), it would
   be worth analysing the corresponding bibtake recipe and transpose it to a
   buildroot package.
+- define a proper SSH access policy. There is currently a passwordless root
+  policy configured, which is of course not a long term solution. Something
+  with a way to provide a set of public keys at build time ?
