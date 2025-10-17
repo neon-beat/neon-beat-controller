@@ -1,0 +1,10 @@
+config BR2_PACKAGE_NEON_BEAT_GAME_FRONTEND
+	bool "neon-beat-game-frontend"
+	select BR2_PACKAGE_HOST_NODEJS
+	select BR2_PACKAGE_LIGHTTPD
+	help
+	  The Neon Beat game frontend is the user-visible interface when
+	  playing a Neon Beat game. It is in charge of displaying the song
+	  countdown, the teams, scores, etc
+
+	  https://github.com/neon-beat/neon-beat-game-front
