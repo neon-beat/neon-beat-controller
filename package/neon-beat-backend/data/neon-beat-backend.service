@@ -5,6 +5,11 @@ Wants=network.target
 
 [Service]
 Type=simple
+Environment=NEON_STORE=couch
+Environment=COUCH_USERNAME=admin
+Environment=COUCH_PASSWORD=admin
+Environment=COUCH_BASE_URL=http://localhost:5984
+Environment=COUCH_DB=game
 Restart=always
 RestartSec=5s
 ExecStart=/bin/neon-beat-back
