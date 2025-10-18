@@ -1,2 +1,3 @@
+source "$BR2_EXTERNAL_NEON_BEAT_PATH/package/neon-beat-admin-frontend/Config.in"
 source "$BR2_EXTERNAL_NEON_BEAT_PATH/package/neon-beat-backend/Config.in"
 source "$BR2_EXTERNAL_NEON_BEAT_PATH/package/neon-beat-game-frontend/Config.in"

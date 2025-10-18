@@ -1,0 +1,10 @@
+config BR2_PACKAGE_NEON_BEAT_ADMIN_FRONTEND
+	bool "neon-beat-admin-frontend"
+	select BR2_PACKAGE_HOST_NODEJS
+	select BR2_PACKAGE_LIGHTTPD
+	help
+	  The Neon Beat admin frontend is the game master interface. It
+	  allows to control a Neon Beat game: reveal songs, manipulate
+	  scores, play/pause, configure a new game, etc.
+
+	  https://github.com/neon-beat/neon-beat-admin-front
