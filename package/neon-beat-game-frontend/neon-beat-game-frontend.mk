@@ -27,9 +27,4 @@ define NEON_BEAT_GAME_FRONTEND_INSTALL_TARGET_CMDS
 		$(TARGET_DIR)/etc/lighttpd/lighttpd.conf
 endef
 
-define NEON_BEAT_GAME_FRONTEND_INSTALL_INIT_SYSTEMD
-	$(INSTALL) -D -m 644 $(NEON_BEAT_GAME_FRONTEND_PKGDIR)/data/neon-beat-frontend.service \
-		$(TARGET_DIR)/usr/lib/systemd/system/neon-beat-frontend.service
-endef
-
 $(eval $(generic-package))
