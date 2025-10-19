@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-NEON_BEAT_BACKEND_VERSION = 0.1.3
+NEON_BEAT_BACKEND_VERSION = 0.5.1
 NEON_BEAT_BACKEND_SITE = $(call github,neon-beat,neon-beat-back,v$(NEON_BEAT_BACKEND_VERSION))
 NEON_BEAT_BACKEND_LICENSE = GPL-3.0
 NEON_BEAT_BACKEND_LICENSE_FILES = COPYING
