@@ -12,9 +12,20 @@ set -e
 SCRIPT_DIR=$(dirname "$(realpath $0)")
 TOP_DIR=${SCRIPT_DIR}/..
 
-rm -rf ${TOP_DIR}/dl/neon-beat-*
-make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}-dirclean all
-make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}
+DL=1
+if [ "$1" == "--no-dl" ]
+then
+	DL=0
+fi
+
+if [ ${DL} -eq 1 ]
+then
+	rm -rf ${TOP_DIR}/dl/neon-beat-*
+	make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}-dirclean all
+	make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}
+else
+	make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}-rebuild
+fi
 ssh nbc "systemctl stop neon-beat-backend"
 scp -O ${TOP_DIR}/output/target/usr/bin/neon-beat-back nbc:/usr/bin
 scp -rO ${TOP_DIR}/output/target/srv/www nbc:/srv
