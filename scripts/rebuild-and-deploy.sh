@@ -16,6 +16,6 @@ rm -rf ${TOP_DIR}/dl/neon-beat-*
 make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}-dirclean all
 make -C ${TOP_DIR} neon-beat-{{game,admin}-frontend,backend}
 ssh nbc "systemctl stop neon-beat-backend"
-scp -O $(TOP_DIR)/output/target/usr/bin/neon-beat-back nbc:/usr/bin
-scp -rO $(TOP_DIR)/output/target/srv/www nbc:/srv
+scp -O ${TOP_DIR}/output/target/usr/bin/neon-beat-back nbc:/usr/bin
+scp -rO ${TOP_DIR}/output/target/srv/www nbc:/srv
 ssh nbc "systemctl start neon-beat-backend"
