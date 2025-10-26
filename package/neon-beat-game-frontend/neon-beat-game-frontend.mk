@@ -17,7 +17,7 @@ endef
 NEON_BEAT_GAME_FRONTEND_POST_EXTRACT_HOOKS += NEON_BEAT_GAME_FRONTEND_DOWNLOAD_DEPS
 
 define NEON_BEAT_GAME_FRONTEND_BUILD_CMDS
-	$(HOST_DIR)/usr/bin/npm --prefix $(@D) run build
+	VITE_API_BASE_URL='http://nbc.local:8080' $(HOST_DIR)/usr/bin/npm --prefix $(@D) run build
 endef
 
 define NEON_BEAT_GAME_FRONTEND_INSTALL_TARGET_CMDS
