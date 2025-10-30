@@ -1,0 +1,16 @@
+[Unit]
+Description=CouchDB database
+After=network.target
+Wants=network.target
+
+[Service]
+User=couchdb
+Group=couchdb
+WorkingDirectory=/home/couchdb
+Type=simple
+Restart=always
+RestartSec=1s
+ExecStart=/home/couchdb/bin/couchdb
+
+[Install]
+WantedBy=multi-user.target

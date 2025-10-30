@@ -1,0 +1,35 @@
+From f2c3a6da777f153862c0a6c8ae65db63cccdce38 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@gmail.com>
+Date: Sun, 19 Oct 2025 23:04:03 +0200
+Subject: [PATCH] rebar.config.script: get rid of fauxton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The config script does not account whether we wanted to disable fauxton
+or not.
+Just remove it to allow the build to pass.
+
+Signed-off-by: Alexis Lothoré <alexis.lothore@gmail.com>
+---
+ rebar.config.script | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/rebar.config.script b/rebar.config.script
+index 722fd8049667..c5dede4967ec 100644
+--- a/rebar.config.script
++++ b/rebar.config.script
+@@ -153,10 +153,6 @@ SubDirs = [
+ DepDescs = [
+ %% Independent Apps
+ {snappy,           "snappy",           {tag, "CouchDB-1.0.9"}},
+-
+-%% %% Non-Erlang deps
+-{fauxton,          {url, "https://github.com/apache/couchdb-fauxton"},
+-                   {tag, "v1.3.2"}, [raw]},
+ {ibrowse,          "ibrowse",          {tag, "CouchDB-4.4.2-6"}},
+ {jiffy,            "jiffy",            {tag, "1.1.2"}},
+ {mochiweb,         "mochiweb",         {tag, "v3.2.2"}},
+-- 
+2.51.1.dirty
+

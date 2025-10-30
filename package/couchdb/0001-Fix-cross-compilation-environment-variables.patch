@@ -1,0 +1,84 @@
+From 1b719807f76d282bce77bcc88c612e48112e8a6a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@gmail.com>
+Date: Mon, 10 Mar 2025 11:41:39 -0300
+Subject: [PATCH] Fix cross compilation environment variables
+
+Allow quickjs makefile to read passed variables for cross_compilation.
+Also, make sure to ask for host-qjsc build rather than qjsc, as we need
+it at build time and not at runtime.
+
+Upstream-Status: Inappropriate [OE-Specific]
+---
+ src/couch_quickjs/build_js.escript    |  2 +-
+ src/couch_quickjs/quickjs/Makefile    | 10 +++++-----
+ src/couch_quickjs/rebar.config.script |  6 +++---
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/src/couch_quickjs/build_js.escript b/src/couch_quickjs/build_js.escript
+index 1da48ee876e2..9bcb269cef32 100644
+--- a/src/couch_quickjs/build_js.escript
++++ b/src/couch_quickjs/build_js.escript
+@@ -73,7 +73,7 @@ compile_bytecode(Js, CBytecode) ->
+     % cp_if_different/2 is used to to avoid triggering a re-compile if nothing changed
+     Tmp = CBytecode ++ ".tmp",
+     {ok, Cwd} = file:get_cwd(),
+-    CompileCmd = Cwd ++ "/quickjs/qjsc -c -N bytecode -o c_src/" ++ Tmp ++ " priv/" ++ Js,
++    CompileCmd = Cwd ++ "/quickjs/host-qjsc -c -N bytecode -o c_src/" ++ Tmp ++ " priv/" ++ Js,
+     os:cmd(CompileCmd),
+     Changed = cp_if_different("c_src/" ++ Tmp, "c_src/" ++ CBytecode),
+     rm("c_src/" ++ Tmp),
+diff --git a/src/couch_quickjs/quickjs/Makefile b/src/couch_quickjs/quickjs/Makefile
+index cf88a723a27a..051d2657f648 100644
+--- a/src/couch_quickjs/quickjs/Makefile
++++ b/src/couch_quickjs/quickjs/Makefile
+@@ -122,13 +122,13 @@ else ifdef CONFIG_COSMO
+   AR=cosmoar
+ else
+   HOST_CC=gcc
+-  CC=$(CROSS_PREFIX)gcc
++  CC?=$(CROSS_PREFIX)gcc
+   CFLAGS+=-g -Wall -MMD -MF $(OBJDIR)/$(@F).d
+   CFLAGS += -Wno-array-bounds -Wno-format-truncation
+   ifdef CONFIG_LTO
+-    AR=$(CROSS_PREFIX)gcc-ar
++    AR?=$(CROSS_PREFIX)gcc-ar
+   else
+-    AR=$(CROSS_PREFIX)ar
++    AR?=$(CROSS_PREFIX)ar
+   endif
+ endif
+ STRIP?=$(CROSS_PREFIX)strip
+@@ -273,11 +273,11 @@ $(QJSC): $(OBJDIR)/qjsc.host.o \
+ 
+ endif #CROSS_PREFIX
+ 
+-QJSC_DEFINES:=-DCONFIG_CC=\"$(QJSC_CC)\" -DCONFIG_PREFIX=\"$(PREFIX)\"
++#QJSC_DEFINES:=-DCONFIG_CC="zz" -DCONFIG_PREFIX=\"$(PREFIX)\"
+ ifdef CONFIG_LTO
+ QJSC_DEFINES+=-DCONFIG_LTO
+ endif
+-QJSC_HOST_DEFINES:=-DCONFIG_CC=\"$(HOST_CC)\" -DCONFIG_PREFIX=\"$(PREFIX)\"
++#QJSC_HOST_DEFINES:=-DCONFIG_CC="zz" -DCONFIG_PREFIX=\"$(PREFIX)\"
+ 
+ $(OBJDIR)/qjsc.o: CFLAGS+=$(QJSC_DEFINES)
+ $(OBJDIR)/qjsc.host.o: CFLAGS+=$(QJSC_HOST_DEFINES)
+diff --git a/src/couch_quickjs/rebar.config.script b/src/couch_quickjs/rebar.config.script
+index a07c19c7af8b..e045630d9770 100644
+--- a/src/couch_quickjs/rebar.config.script
++++ b/src/couch_quickjs/rebar.config.script
+@@ -16,9 +16,9 @@
+ Msys = "msys2_shell.cmd -defterm -no-start -ucrt64 -here -lc ".
+ 
+ PreHooks = [
+-    {"(linux|darwin)", compile, "make CONFIG_LTO=y -C quickjs -j8 libquickjs.lto.a qjsc"},
+-    {"freebsd", compile, "gmake -C quickjs -j8 libquickjs.a qjsc"},
+-    {"win32", compile, Msys ++ "'make CONFIG_LTO=y -C quickjs -j8 libquickjs.lto.a qjsc'"},
++    {"(linux|darwin)", compile, "make CONFIG_LTO=y -C quickjs -j8 libquickjs.lto.a host-qjsc"},
++    {"freebsd", compile, "gmake -C quickjs -j8 libquickjs.a host-qjsc"},
++    {"win32", compile, Msys ++ "'make CONFIG_LTO=y -C quickjs -j8 libquickjs.lto.a host-qjsc'"},
+     {"(linux|darwin|freebsd|win32)", compile, "escript build_js.escript compile"}
+ ].
+ 
+-- 
+2.51.1.dirty
+

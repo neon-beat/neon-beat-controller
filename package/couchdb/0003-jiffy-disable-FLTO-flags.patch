@@ -1,0 +1,125 @@
+From 96b4eed98370acc22d7218197015d7efb76e2721 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+Date: Wed, 29 Oct 2025 23:54:51 +0100
+Subject: [PATCH] jiffy: disable FLTO flags
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+jiffy fails to cross-compile on the following error:
+
+  ==> jiffy (compile)
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `dec_destroy' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: in function `load':
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/jiffy.c:43:(.text+0xcb0):
+  dangerous relocation: unsupported relocation
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `enc_destroy' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/jiffy.c:52:(.text+0xcdc):
+  dangerous relocation: unsupported relocation
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `decode_iter' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: in function `decode_iter':
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/decoder.c:750:(.text+0x4a30):
+  dangerous relocation: unsupported relocation
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `encode_iter' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: in function `encode_iter':
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/encoder.c:747:(.text+0xb1dc):
+  dangerous relocation: unsupported relocation collect2: error: ld
+  returned 1 exit status ERROR:
+  sh(/home/alexis/src/neon_beat/neon_beat_controller/output/host/bin/aarch64-linux-g++
+  c_src/decoder.o c_src/encoder.o c_src/jiffy.o c_src/termstack.o
+  c_src/utf8.o c_src/util.o c_src/doubles.o c_src/objects.o
+  c_src/double-conversion/bignum-dtoa.o c_src/double-conversion/bignum.o
+  c_src/double-conversion/cached-powers.o c_src/double-conversion/diy-fp.o
+  c_src/double-conversion/double-conversion.o
+  c_src/double-conversion/fast-dtoa.o c_src/double-conversion/fixed-dtoa.o
+  c_src/double-conversion/strtod.o
+  -L/home/alexis/src/neon_beat/neon_beat_controller/output/host/aarch64-buildroot-linux-gnu/sysroot/erlang/lib/erl_interface-5.4/lib
+  -flto -lstdc++ $LDLIBS -shared
+  -L/home/alexis/src/neon_beat/neon_beat_controller/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/erlang/lib/erl_interface-5.4/lib
+  -lei -o priv/jiffy.so) failed with return code 1 and the following
+  output:
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `dec_destroy' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: in function `load':
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/jiffy.c:43:(.text+0xcb0):
+  dangerous relocation: unsupported relocation
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `enc_destroy' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/jiffy.c:52:(.text+0xcdc):
+  dangerous relocation: unsupported relocation
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `decode_iter' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: in function `decode_iter':
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/decoder.c:750:(.text+0x4a30):
+  dangerous relocation: unsupported relocation
+  /home/alexis/src/neon_beat/neon_beat_controller/output/host/opt/ext-toolchain/bin/../lib/gcc/aarch64-buildroot-linux-gnu/15.1.0/../../../../aarch64-buildroot-linux-gnu/bin/ld:
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: relocation R_AARCH64_ADR_PREL_PG_HI21
+  against symbol `encode_iter' which may bind externally can not be used
+  when making a shared object; recompile with -fPIC
+  /tmp/ccOdAYM6.ltrans0.ltrans.o: in function `encode_iter':
+  /home/alexis/src/neon_beat/neon_beat_controller/output/build/couchdb-3.4.3/src/jiffy/c_src/encoder.c:747:(.text+0xb1dc):
+  dangerous relocation: unsupported relocation collect2: error: ld
+  returned 1 exit status
+
+Removing the FLTO flags seems to fix jiffy cross-compilation, possibly
+because those FLTO flags remove the -fPIC flag on each individual object
+build.
+
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+---
+ src/jiffy/rebar.config.script | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
+
+diff --git a/src/jiffy/rebar.config.script b/src/jiffy/rebar.config.script
+index c2f1689eb03c..ae5cf832aca7 100644
+--- a/src/jiffy/rebar.config.script
++++ b/src/jiffy/rebar.config.script
+@@ -17,26 +17,7 @@ Config1 = case lists:keyfind(erl_opts, 1, CONFIG) of
+         CONFIG ++ [{erl_opts, ErlOpts}]
+ end,
+ 
+-Config2 = case os:type() of
+-    {unix, _} ->
+-        CC = case os:getenv("CC") of
+-            false -> "cc";
+-            Else -> Else
+-        end,
+-        FLTO_CHECK = "echo 'int main(int argc, char *argv[]) {return 0;}' | "
+-                ++ CC ++ " -c -x c -o /dev/null -flto -",
+-        case os:cmd(FLTO_CHECK) of
+-            [] ->
+-                {port_env, PortEnv} = lists:keyfind(port_env, 1, Config1),
+-                NewFlag = {".*", "FLTO_FLAG", "-flto"},
+-                NewPortEnv = lists:keyreplace("FLTO_FLAG", 2, PortEnv, NewFlag),
+-                lists:keyreplace(port_env, 1, Config1, {port_env, NewPortEnv});
+-            _ ->
+-                Config1
+-        end;
+-    _ ->
+-        Config1
+-end,
++Config2 = Config1,
+ 
+ IsRebar2 = case lists:keyfind(rebar, 1, application:loaded_applications()) of
+     {rebar, _Desc, Vsn} ->
+-- 
+2.51.1.dirty
+

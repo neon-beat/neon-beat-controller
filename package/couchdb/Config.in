@@ -1,0 +1,16 @@
+config BR2_PACKAGE_COUCHDB
+	bool "couchdb"
+	select BR2_PACKAGE_OPENSSL
+	select BR2_PACKAGE_HOST_ERLANG # build time dependency
+	select BR2_PACKAGE_ERLANG # build time dependency
+	select BR2_PACKAGE_QUICKJS # run time dependency
+	select BR2_PACKAGE_ICU
+	
+	help
+		CouchDB is an open-source document-oriented NoSQL database,
+		implemented in Erlang. This package does not really build
+		CouchDB: it merely imports a docker an offline docker image on
+		first boot. Please note that it implies that the package is
+		not portable: it only works for ARMv8.
+
+		https://hub.docker.com/r/arm64v8/couchdb

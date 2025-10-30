@@ -1,0 +1,6 @@
+# From https://archive.apache.org/dist/couchdb/source/3.4.3/apache-couchdb-3.4.3.tar.gz.sha256
+sha256  0357511b6fed70e3e64f4e75aa5d7cc2000cb0f264ef301702b1816427f72f20  apache-couchdb-3.4.3.tar.gz
+# Locally computed
+sha256  0357511b6fed70e3e64f4e75aa5d7cc2000cb0f264ef301702b1816427f72f20  apache-couchdb-3.5.0.tar.gz
+# Locally computed
+sha256  0357511b6fed70e3e64f4e75aa5d7cc2000cb0f264ef301702b1816427f72f20  LICENSE
