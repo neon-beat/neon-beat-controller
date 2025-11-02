@@ -10,7 +10,7 @@ Environment=COUCH_PASSWORD=admin
 Environment=COUCH_BASE_URL=http://localhost:5984
 Environment=COUCH_DB=game
 Restart=always
-RestartSec=5s
+RestartSec=1s
 ExecStart=/bin/neon-beat-back
 
 [Install]
